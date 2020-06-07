@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My website</title>
+    <link rel="stylesheet" type="text/css" href="./stylesheets/index.css">
+  </head>
+  <body>
+    <h1></h1>
+
+    <form method="POST" id="form">
+    	 Name:<br>
+    	<input type="text" name="username"  placeholder="username...">
+    	<br>
+    	 Pass:<br>
+    	<input type="text" name="password" placeholder="password...">
+    	<br>
+    	 Quickpoint:<br>
+      <input type="text" name="quickpoint" placeholder="quickpoint...">
+      <br>
+       Normalpoint:<br>
+      <input type="text" name="normalpoint" placeholder="normalpoint...">
+      <br>
+   <br><br>    
+           <input type="submit" name="delete" value="DELETE" onclick="checkButon(this.name)">     
+           <input type="submit" name="add" value="ADD" onclick="checkButon(this.name)">
+           <input type="submit" name="edit" value="EDIT" onclick="checkButon(this.name)">
+        
+  <br>
+   <%-data%>
+    </form>
+
+    
+   <script type="text/javascript">
+      function checkButon(name) {
+       console.log(name);
+       if(name === 'delete') document.getElementById('form').action = "/delete";
+       if(name === 'add') document.getElementById('form').action = "/add";
+       if(name === 'edit') document.getElementById('form').action = "/edit";
+      }
+      function myFunction(number)
+      {     
+            number = parseInt(number,10)+1;
+            var a = document.getElementById("form");
+            var x = document.getElementById("myTable").rows[number].cells[0].innerHTML;
+            var y = document.getElementById("myTable").rows[number].cells[1].innerHTML;
+            var z = parseInt(document.getElementById("myTable").rows[number].cells[2].innerHTML,10);
+            var i = parseInt(document.getElementById("myTable").rows[number].cells[3].innerHTML,10);
+            console.log(z);
+             a.elements[0].value=x;
+             a.elements[1].value=y;
+             a.elements[2].value=z;
+             a.elements[3].value=i;
+
+
+             
+      }
+     
+    </script>
+  </body>
+</html>

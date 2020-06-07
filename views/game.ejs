@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Freaking Math</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="./stylesheets/freakingmath.css">
+    <link rel="stylesheet" type="text/css" href="./stylesheets/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="./stylesheets/game.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="./javascripts/game.js"></script>
+</head>
+
+<body>
+    <div class="game">
+        <% if (username) { %>
+        <div style="float: left; background: black ; color: white;padding:1px" id="inforuser">
+            <p id="username"><%=username%></p>
+        </div>
+        <% } %>
+        <div class="beforePlaying">
+            <img class="photo" src="./images/0.png">
+            <span class="title1">Freaking</span>
+            <span class="title2">Math</span>
+            <div><button class="start1"><i class="fa fa-play"></i></button></div>
+            <div style="top: 478px"><button class="start2">20s</button></div>
+        </div>
+        <div class="time"></div>
+        <div class="afterPlaying1">
+            <li style="padding-top: 80px">Game Over</li>
+            <ul style="padding: 17px 0">
+                <li>Score: </li>
+                <li class="score"></li>
+            </ul>
+            <ul>
+                <li>Highscore: </li>
+                <li class="highScore"></li>
+            </ul>
+            <div><button class="restart1"><i class="fa fa-undo"></i></button></div>
+            <div style="top: 478px"><button class="menu"><i class="fa fa-th-list"></i></button></div>
+        </div>
+        <div class="afterPlaying2">
+            <li style="padding-top: 80px">Game Over</li>
+            <ul style="padding: 17px 0">
+                <li>Score: </li>
+                <li class="score"></li>
+            </ul>
+            <ul>
+                <li>Highscore: </li>
+                <li class="highScore"></li>
+            </ul>
+            <div><button class="restart2"><i class="fa fa-undo"></i></button></div>
+            <div style="top: 478px"><button class="menu"><i class="fa fa-th-list"></i></button></div>
+        </div>
+        <div class="Playing1">
+            <ul class="calculation">
+                <li class="num-1"></li>
+                <li class="add">+</li>
+                <li class="num-2"></li>
+                <li class="point"></li>
+            </ul>
+            <ul style="padding-bottom: 55px">
+                <li class="result">=</li>
+                <li class="sum"></li>
+            </ul>
+            <button class="true1"><i class="fa fa-check"></i></button>
+            <button class="false1	"><i class="fa fa-times"></i></button>
+        </div>
+        <div class="Playing2">
+            <ul class="calculation">
+                <li class="num-1"></li>
+                <li class="add">+</li>
+                <li class="num-2"></li>
+                <li class="point"></li>
+            </ul>
+            <ul style="padding-bottom: 55px">
+                <li class="result">=</li>
+                <li class="sum"></li>
+            </ul>
+            <button class="true2"><i class="fa fa-check"></i></button>
+            <button class="false2"><i class="fa fa-times"></i></button>
+        </div>
+    </div>
+    <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="tableRank">
+            </div>
+        </div>
+    </div>
+    <div>
+        <% if ('admin' == username) { %>
+        <a href="/usermanager">User</a>
+        <% } %>
+        <p id="rank">Rank</p>
+        <a href="/logout">log out</a>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,274 @@
+Skip to content
+Search or jump to…
+
+Pull requests
+Issues
+Marketplace
+Explore
+ 
+@bee98 
+john3connor
+/
+Freaking-Math
+1
+00
+ Code
+ Issues 0
+ Pull requests 0 Actions
+ Projects 0
+ Wiki
+ Security 0
+ Insights
+Freaking-Math/freakingmath.css
+@john3connor john3connor done
+9a78a4b 20 days ago
+237 lines (198 sloc)  3.12 KB
+ 
+* {
+	margin: 0;
+	padding: 0;
+}
+
+@font-face {
+    font-family: TorqueSense;
+    src: url(TorqueSense.otf);
+}
+
+.game {
+    text-align: center;
+    font-family: TorqueSense;
+    color: #ecf0f1;
+    width: 500px;
+    height: 638px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.beforePlaying {
+	background-color: #354960;
+	height: 100%;
+	position: relative;
+}
+
+.photo {
+    position: absolute;
+    right: 97px;
+    top: 65px;
+}
+
+.beforePlaying span {
+	position: absolute;
+}
+
+.beforePlaying div {
+    position: absolute;
+    top: 365px;
+    left: 160px;
+}
+
+.title1 {
+	font-size: 45px;
+	top: 230px;
+	left: 92px
+}
+
+.title2 {
+	font-size: 65px;
+    font-weight: bold;	
+	right: 92px;
+    top: 212px;
+}
+
+li {
+    display: inline-block;
+    font-size: 100px;
+    font-weight: bold;
+    padding: 0px 10px;
+}
+
+.beforePlaying button {
+    width: 180px;
+    height: 80px;
+    border: none;
+    border-radius: 6px;
+    box-shadow: 0px 8px 8px 0 grey;
+    background-color: #ecf0f1;
+}
+
+.fa-play {
+	color: #3598db;
+	font-size: 60px !important;
+}
+
+.start2 {
+    font-size: 50px;
+    font-weight: bolder;
+    color: green;
+}
+.time {
+	display: none;
+	width: 500px;
+    height: 10px;
+    background-color: white;
+    position: absolute;
+    top: 0;
+}
+
+.Playing1 {
+	display: none;
+	position: relative;
+	height: 100%;
+}
+
+.Playing2 {
+	display: none;
+	position: relative;
+	height: 100%;
+}
+
+.Playing1 button {
+    width: 160px;
+    height: 160px;
+    border: none;
+    border-radius: 6px;
+    box-shadow: 0px 8px 8px 0 grey;
+    background-color: #ecf0f1;
+}
+
+.Playing1 button:focus {
+	outline:0 !important;
+}
+
+.Playing2 button {
+    width: 160px;
+    height: 160px;
+    border: none;
+    border-radius: 6px;
+    box-shadow: 0px 8px 8px 0 grey;
+    background-color: #ecf0f1;
+}
+
+.Playing2 button:focus {
+	outline:0 !important;
+}
+
+.fa-check {
+	color: #3598db;
+	font-size: 110px !important;
+}
+
+.true1 {
+	position: absolute;
+    left: 73px;
+}
+
+.false1 {
+	position: absolute;
+    right: 73px;
+}
+
+.true2 {
+	position: absolute;
+    left: 73px;
+}
+
+.false2 {
+	position: absolute;
+    right: 73px;
+}
+
+.fa-times {
+	color: #e84c3d;
+	font-size: 110px !important;
+}
+
+.calculation {
+	padding-top: 140px;
+}
+
+.add {
+	padding: 0px 25px;
+}
+
+.result {
+    padding-right: 25px;
+}
+
+.point {
+    font-size: 40px;
+    position: absolute;
+    right: 40px;
+    top: 30px;
+}
+
+.afterPlaying1 {
+	height: 100%;
+	background-color: #354960;
+	display: none;
+}
+
+.fa-undo {
+	color: #3598db;
+	font-size: 60px !important;
+}
+
+.fa-th-list {
+	color: #3598db;
+	font-size: 60px !important;	
+}
+
+.afterPlaying1 li {
+	font-size: 65px;
+}
+
+.afterPlaying1 button {
+    width: 180px;
+    height: 80px;
+    border: none;
+    border-radius: 6px;
+    box-shadow: 0px 8px 8px 0 grey;
+    background-color: #ecf0f1;
+}
+
+.afterPlaying1 div {
+    position: absolute;
+    top: 365px;
+    left: 160px;
+}
+
+.afterPlaying2 {
+	height: 100%;
+	background-color: #354960;
+	display: none;
+}
+
+.afterPlaying2 li {
+	font-size: 65px;
+}
+
+.afterPlaying2 button {
+    width: 180px;
+    height: 80px;
+    border: none;
+    border-radius: 6px;
+    box-shadow: 0px 8px 8px 0 grey;
+    background-color: #ecf0f1;
+}
+
+.afterPlaying2 div {
+    position: absolute;
+    top: 365px;
+    left: 160px;
+}
+© 2020 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
+Help
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
