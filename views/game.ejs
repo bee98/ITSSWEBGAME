@@ -15,7 +15,7 @@
     <div class="game">
         <% if (username) { %>
         <div style="float: left; background: black ; color: white;padding:1px" id="inforuser">
-            <p id="username"><%=username%></p>
+            <p id="username" class="avatar"><%=username%></p>
         </div>
         <% } %>
         <div class="beforePlaying">
@@ -23,7 +23,14 @@
             <span class="title1">Freaking</span>
             <span class="title2">Math</span>
             <div><button class="start1"><i class="fa fa-play"></i></button></div>
-            <div style="top: 478px"><button class="start2">20s</button></div>
+            <div style="top: 405px"><button class="start2">20s</button></div>
+            <div style="top: 520px">
+                <% if ('admin' == username) { %>
+                <a href="/usermanager">User</a>
+                <% } %>
+                <button id="rank" class="rankbuton"><i class="fa fa-star"></i></button>
+                <a href="/logout">Log out</a>
+            </div>
         </div>
         <div class="time"></div>
         <div class="afterPlaying1">
@@ -88,13 +95,6 @@
             <div id="tableRank">
             </div>
         </div>
-    </div>
-    <div>
-        <% if ('admin' == username) { %>
-        <a href="/usermanager">User</a>
-        <% } %>
-        <p id="rank">Rank</p>
-        <a href="/logout">log out</a>
     </div>
 </body>
 
