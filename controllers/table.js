@@ -10,6 +10,7 @@ function tableAdd(freaks) {
         '<th>' + 'Pass' + '</th>' +
         '<th>' + 'Quick' + '</th>' +
         '<th>' + 'Normal' + '</th>' +
+        '<th>' + 'Age' + '</th>' +
         '</tr>';
     var i = 0;
     freaks = freaks.map(o => o.toObject());
@@ -19,6 +20,7 @@ function tableAdd(freaks) {
             '<td>' + freak.password + '</td>' +
             '<td>' + freak.quickpoint + '</td>' +
             '<td>' + freak.normalpoint + '</td>' +
+            '<td>' + freak.age + '</td>' +
             '<td><label><input ' + 'value = ' + '"' + freak._id + '"' + 'name="check" type="radio"' + 'onclick="myFunction(' + i + ')"' + ' /></label></td>'
         '</tr>';
         i++;
@@ -29,7 +31,7 @@ function tableAdd(freaks) {
 }
 exports.add = function(req, res) {
     db.on();
-    Freak.create({ username: req.body.username, quickpoint: parseInt(req.body.quickpoint, 10), normalpoint: parseInt(req.body.normalpoint, 10), password: req.body.password }, () => {
+    Freak.create({ username: req.body.username, quickpoint: parseInt(req.body.quickpoint, 10), normalpoint: parseInt(req.body.normalpoint, 10), password: req.body.password ,age: parseInt(req.body.age,10)}, () => {
         Freak.find().sort({ date: 'ascending' })
             .exec(function(err, freaks) {
                 if (err) return handleError(err);
@@ -45,7 +47,7 @@ exports.add = function(req, res) {
 //edit update
 exports.edit = function(req, res) {
     db.on();
-    Freak.updateOne({ _id: req.body.check }, { username: req.body.username, quickpoint: parseInt(req.body.quickpoint, 10), normalpoint: parseInt(req.body.normalpoint, 10), password: req.body.password }, () => {
+    Freak.updateOne({ _id: req.body.check }, { username: req.body.username, quickpoint: parseInt(req.body.quickpoint, 10), normalpoint: parseInt(req.body.normalpoint, 10), password: req.body.password,age: parseInt(req.body.age,10) }, () => {
         Freak.find(function(err, freaks) {
             if (err) return handleError(err);
             var data = tableAdd(freaks);

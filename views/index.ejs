@@ -1,29 +1,36 @@
 <!DOCTYPE html>
 <html>
-<head id = "start">
-  <title>Login</title>
-  <link rel="stylesheet" type="text/css" href="./stylesheets/login.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="./javascripts/login.js"></script>
+
+<head id="start">
+    <title>Login</title>
+    <link rel="stylesheet" type="text/css" href="./stylesheets/login.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="./javascripts/login.js"></script>
 </head>
+
 <body>
-<div class="login-page">
-  <div class="form">
-    <form class="register-form">
-      <input type="text" placeholder="username" name="username" />
-      <input type="password" placeholder="password" name="password" />
-      <p id="status" style="color: red"></p>
-      <button id = "signup" >create</button>
-      <p class="message">Already registered? <a href="#">Sign In</a></p>
-    </form>
-    <form class="login-form" method="POST" action="/signin">
-      <input type="text" placeholder="username" name="username"/>
-      <input type="password" placeholder="password" name="password"/>
-      <p style="color: red"><%=error%><p>
-      <input type="submit" value="Login">
-      <p class="message">Not registered? <a href="#">Create an account</a></p>
-    </form>
-  </div>
-</div>
+    <div class="login-page">
+        <div class="form">
+            <form class="register-form">
+                <input type="text" placeholder="username" name="username" />
+                <input type="password" placeholder="password" name="password" />
+                <input type="password" placeholder="re-password" name="password2" />
+                <input type="age" placeholder="age" name="age" />
+                <p id="status" style="color: red"></p>
+                <button id="signup">create</button>
+                <p class="message">Already registered? <a href="#">Sign In</a></p>
+            </form>
+            <form class="login-form" method="POST" action="/signin">
+                <input type="text" placeholder="username" name="username" />
+                <input type="password" placeholder="password" name="password" />
+                <p style="color: red">
+                    <%=error%>
+                    <p>
+                        <input type="submit" value="Login">
+                        <p class="message">Not registered? <a href="#">Create an account</a></p>
+            </form>
+        </div>
+    </div>
 </body>
+
 </html>
