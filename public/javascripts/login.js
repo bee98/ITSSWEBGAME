@@ -10,7 +10,6 @@ $(document).ready(function() {
         data.password = $('.register-form').find('input[name="password"]').val();
         data.password2 = $('.register-form').find('input[name="password2"]').val();
         data.age = $('.register-form').find('input[name="age"]').val();
-        console.log(data);
         $.ajax({
             url: '/signup',
             type: 'POST',

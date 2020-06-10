@@ -10,7 +10,7 @@ exports.signin = function(req, res) {
         db.off();
         if (null == data) res.render('index', { error: 'Login information is incorrect' });
         else
-            res.render('game', { username: data.username });
+            res.render('game', { username: data.username,quick:data.quickpoint,normal:data.normalpoint});
     });
 }
 exports.signup = function(req, res) {
