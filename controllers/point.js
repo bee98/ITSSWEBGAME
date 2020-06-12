@@ -8,6 +8,10 @@ exports.update = function(req, res, next) {
     db.on();
     Freak.findOne({ username: req.body.username }, function(e, freak) {
     	if(e) res.json({});
+    	else if(null === freak){
+    		db.off();
+    		res.json({});
+    	}   		 
         else if (freak.quickpoint < req.body.quickpoint && freak.normalpoint < req.body.normalpoint) Freak.updateOne({ username: req.body.username }, { quickpoint: req.body.quickpoint, normalpoint: req.body.normalpoint }, function(e) {
             db.off();
             res.json({});
