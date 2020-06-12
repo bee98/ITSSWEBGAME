@@ -12,10 +12,11 @@ exports.rank = function(req, res, next) {
         '</tr>';
     Freak.find().sort({ quickpoint: -1 }).limit(10).exec(
         function(err, quick) {
-
+            
 
             Freak.find().sort({ normalpoint: -1 }).limit(10).exec(
                 function(err, normal) {
+                    console.log(quick);
                     db.off();
                     for (let i = 0; i < 10; i++) {
                         table = table + '<tr>' +
