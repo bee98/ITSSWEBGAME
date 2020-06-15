@@ -1,60 +1,70 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <title>My website</title>
-    <link rel="stylesheet" type="text/css" href="./stylesheets/index.css">
-  </head>
-  <body>
-    <h1></h1>
+    <link rel="stylesheet" type="text/css" href="./stylesheets/table.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="./javascripts/table.js"></script>
+</head>
 
-    <form method="POST" id="form">
-    	 Name:<br>
-    	<input type="text" name="username"  placeholder="username...">
-    	<br>
-    	 Pass:<br>
-    	<input type="text" name="password" placeholder="password...">
-    	<br>
-    	 Quickpoint:<br>
-      <input type="text" name="quickpoint" placeholder="quickpoint...">
-      <br>
-       Normalpoint:<br>
-      <input type="text" name="normalpoint" placeholder="normalpoint...">
-      <br>
-   <br><br>    
-           <input type="submit" name="delete" value="DELETE" onclick="checkButon(this.name)">     
-           <input type="submit" name="add" value="ADD" onclick="checkButon(this.name)">
-           <input type="submit" name="edit" value="EDIT" onclick="checkButon(this.name)">
-        
-  <br>
-   <%-data%>
-    </form>
+<body>
+    <div class="game">
+        <form method="POST" id="form">
+            <div class="container" style="color: white; padding-top: 20px">
+                <div class="row">
+                    <label class="col-md-5">Name</label>
+                    <input type="text" name="username" placeholder="username...">
+                </div>
+            </div>
 
-    
-   <script type="text/javascript">
-      function checkButon(name) {
-       console.log(name);
-       if(name === 'delete') document.getElementById('form').action = "/delete";
-       if(name === 'add') document.getElementById('form').action = "/add";
-       if(name === 'edit') document.getElementById('form').action = "/edit";
-      }
-      function myFunction(number)
-      {     
-            number = parseInt(number,10)+1;
-            var a = document.getElementById("form");
-            var x = document.getElementById("myTable").rows[number].cells[0].innerHTML;
-            var y = document.getElementById("myTable").rows[number].cells[1].innerHTML;
-            var z = parseInt(document.getElementById("myTable").rows[number].cells[2].innerHTML,10);
-            var i = parseInt(document.getElementById("myTable").rows[number].cells[3].innerHTML,10);
-            console.log(z);
-             a.elements[0].value=x;
-             a.elements[1].value=y;
-             a.elements[2].value=z;
-             a.elements[3].value=i;
+            <div class="container mt-3" style="color: white">
+                <div class="row">
+                    <label class="col-md-5">Password</label>
+                    <input type="text" name="password" placeholder="password...">
+                </div>
+            </div>
 
+            <div class="container mt-3" style="color: white">
+                <div class="row">
+                    <label class="col-md-5">Quickpoint</label>
+                    <input type="text" name="quickpoint" placeholder="quickpoint...">
+                </div>
+            </div>
 
-             
-      }
-     
+            <div class="container mt-3" style="color: white">
+                <div class="row">
+                    <label class="col-md-5">Normalpoint</label>
+                    <input type="text" name="normalpoint" placeholder="normalpoint...">
+                </div>
+            </div>
+
+            <div class="container mt-3" style="color: white">
+                <div class="row">
+                    <label class="col-md-5">Age</label>
+                    <input type="text" name="age" placeholder="age...">
+                </div>
+            </div>          
+            <div id="error" style="color: red;font:sans-serif;"></div>
+            <br>
+            <input type="button" name="delete" value="DELETE" onclick="checkButon(this.name)">
+            <input type="button" name="add" value="ADD" onclick="checkButon(this.name)">
+            <input type="button" name="edit" value="EDIT" onclick="checkButon(this.name)">
+            <br>
+            <br>
+            <input type="text" name="search" id="search" placeholder="Search..." onkeypress="searchName(event)">
+            <br>
+            <div id="usertable" class="table table-striped">
+                <div class="data">
+                    <%-data%>
+                </div>
+                
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript">
     </script>
-  </body>
+</body>
+
 </html>

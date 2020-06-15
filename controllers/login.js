@@ -10,26 +10,34 @@ exports.signin = function(req, res) {
         db.off();
         if (null == data) res.render('index', { error: 'Login information is incorrect' });
         else
-            res.render('game',{username:data.username});
+            res.render('game', { username: data.username,quick:data.quickpoint,normal:data.normalpoint});
     });
 }
 exports.signup = function(req, res) {
     db.on();
     console.log(req.body);
-    Freak.findOne({username: req.body.username}, function(e, data) {
+    if (req.body.password != req.body.password2) 
+        {
+            db.off();
+            res.json({ status: 'Failure!' });
+        }
+    else
+    {
+       Freak.findOne({ username: req.body.username }, function(e, data) {
         if (null == data) {
 
-            Freak.create({ username: req.body.username, password: req.body.password,quickpoint:0,normalpoint:0}, function(e) {
+            Freak.create({ username: req.body.username, password: req.body.password, quickpoint: 0, normalpoint: 0 ,age: parseInt(req.body.age,10)}, function(e) {
                 // body...
                 console.log(e);
                 db.off();
             });
             res.json({ status: 'Success!' });
-        } else
-        {
+        } else {
             db.off();
             res.json({ status: 'Failure!' });
         }
-    });
+    }); 
+    }
+    
 
 }

@@ -2,7 +2,8 @@ $(document).ready(function() {
     var num1, num2, sum, time, count1, count2, highscore1 = 0,
         highscore2 = 0;
     var colors = ["#551A8B", "#800080", "#CD2990", "#CD0000", "#EE7600", "#8B658B", "#008B00", "#00CDCD", "#838B8B", "#CD853F"];
-    let username = $('#username').text();
+    const nameInfor = $('#username').text();
+    let username = nameInfor.toString().trim();
     //random phép toán
     function changeNumber() {
         num1 = Math.floor(Math.random() * 20);

@@ -8,16 +8,36 @@
     <link rel="stylesheet" type="text/css" href="./stylesheets/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="./stylesheets/game.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="./javascripts/game.js"></script>
+    <script src="./javascripts/profile.js"></script>
 </head>
 
 <body>
+
     <div class="game">
-        <% if (username) { %>
-        <div style="float: left; background: black ; color: white;padding:1px" id="inforuser">
-            <p id="username" class="avatar"><%=username%></p>
+        <div class="dropdown">
+            <button onclick="profile()" class="dropbtn">
+                <% if (username) { %>
+                    <p><%=username%></p>
+                <% } %>
+            </button>
+            <div id="myDropdown" class="dropdown-content">
+                <% if (username) { %>
+                <a id="quick" class="avatar" href="#">
+                    Quick:
+                    <%=quick%></a>
+                <a id="normal" class="avatar" href="#">
+                    Normal:
+                    <%=normal%></a>
+                <% } %>
+                <% if ('admin' == username) { %>
+                <a href="/usermanager">User</a>
+                <% } %>
+                <a href="/logout">Log out</a>
+            </div>
         </div>
-        <% } %>
+
         <div class="beforePlaying">
             <img class="photo" src="./images/0.png">
             <span class="title1">Freaking</span>
@@ -25,11 +45,7 @@
             <div><button class="start1"><i class="fa fa-play"></i></button></div>
             <div style="top: 405px"><button class="start2">20s</button></div>
             <div style="top: 520px">
-                <% if ('admin' == username) { %>
-                <a href="/usermanager">User</a>
-                <% } %>
                 <button id="rank" class="rankbuton"><i class="fa fa-star"></i></button>
-                <a href="/logout">Log out</a>
             </div>
         </div>
         <div class="time"></div>
@@ -71,7 +87,7 @@
                 <li class="sum"></li>
             </ul>
             <button class="true1"><i class="fa fa-check"></i></button>
-            <button class="false1	"><i class="fa fa-times"></i></button>
+            <button class="false1   "><i class="fa fa-times"></i></button>
         </div>
         <div class="Playing2">
             <ul class="calculation">
