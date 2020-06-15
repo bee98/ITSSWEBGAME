@@ -1,8 +1,8 @@
 var mongoose = require('mongoose');
-var Freak = require('../models/freaking.js');
-var db = require('../models/db.js');
+var pool = require('../models/database.js');
 var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
+
 function tableAdd(freaks) {
     var data = '<table id="myTable">' + '<tr>' +
         '<th>' + 'Name' + '</th>' +
@@ -12,7 +12,6 @@ function tableAdd(freaks) {
         '<th>' + 'Age' + '</th>' +
         '</tr>';
     var i = 0;
-    freaks = freaks.map(o => o.toObject());
     freaks.forEach((freak) => {
         data = data + '<tr>' +
             '<td>' + freak.username + '</td>' +
@@ -28,107 +27,144 @@ function tableAdd(freaks) {
     return data;
 
 }
-exports.add = function(req, res) {
-    db.on();
-    Freak.findOne({ username: req.body.username }, function(e, freak) {
-        if (null === freak) {
-            Freak.create({ username: req.body.username, quickpoint: parseInt(req.body.quickpoint, 10), normalpoint: parseInt(req.body.normalpoint, 10), password: req.body.password, age: parseInt(req.body.age, 10) }, () => {
-                Freak.find().sort({ date: 'ascending' })
-                    .exec(function(err, freaks) {
-                        if (err) return handleError(err);
-                        var data = tableAdd(freaks);
-                        db.off();
-                        res.json({ data: data,error:""});
+exports.add = function (req, res) {
+    pool.on;
+    pool.connect((err, client, done) => {
+        if (err) throw err;
+        const query = `
+        SELECT username, password, quickpoint, normalpoint, age FROM players, ranking WHERE players.id = ranking.id AND username=$1;
+        `;
+        client.query(query, [req.body.username], (error, result) => {
+            if (err) {
+                return handleError(console.error());
+            }
+            if (result.rows.length === 0) {
+                const regis_query = `
+                INSERT INTO players(username, password, age) VALUES($1,$2,$3);
+                `;
+                client.query(regis_query, [req.body.username, req.body.password, parseInt(req.body.age, 10)], (error) => {
+                    if (err) {
+                        console.log(error)
+                    }
+                });
 
-                    });
+                const ranking_query = `INSERT INTO ranking(id, quickpoint, normalpoint) VALUES((SELECT id from players WHERE username=$1),$2,$3);`;
+                client.query(ranking_query, [req.body.username, req.body.quickpoint, req.body.normalpoint], (error) => {
+                    if (err) {
+                        console.log(error)
+                    }
+                });
 
+                const query = `
+                    SELECT username, password, quickpoint, normalpoint, age FROM players, ranking WHERE players.id = ranking.id;
+                `;
 
-            });
-        } else {
-            Freak.find(function(err, freaks) {
-                if (err) return handleError(err);
-                var data = tableAdd(freaks);
-                db.off();
-                res.json({ data: data, error: 'Name belongs to the other account' });
-
-            });
-        }
+                client.query(query, [], (e, results) => {
+                    done();
+                    if (e) return handleError(e);
+                    var data = tableAdd(results.rows);
+                    res.json({ data: data, erorr: '' });
+                });
+            } else {
+                const query = `
+                    SELECT username, password, quickpoint, normalpoint, age FROM players, ranking WHERE players.id = ranking.id;
+                `;
+                client.query(query, [], (e, result) => {
+                    done();
+                    // if (e) return handleError(e);
+                    var data = tableAdd(result.rows);
+                    res.json({ data: data, erorr: 'Name belongs to the other account' });
+                });
+            }
+        });
     });
-
 }
 //edit update
-exports.edit = function(req, res) {
-    db.on();
-    Freak.findOne({ username: req.body.username }, function(e, freak) {
-        if (null === freak) {
-            Freak.updateOne({ _id: req.body.check }, { username: req.body.username, quickpoint: parseInt(req.body.quickpoint, 10), normalpoint: parseInt(req.body.normalpoint, 10), password: req.body.password, age: parseInt(req.body.age, 10) }, () => {
-                Freak.find(function(err, freaks) {
-                    if (err) return handleError(err);
-                    var data = tableAdd(freaks);
-                    db.off();
-                    res.json({ data: data, erorr: '' });
-
-
-                });
-
-            });
-
-        } else if (req.body.check != freak._id) {
-            Freak.find(function(err, freaks) {
-                if (err) return handleError(err);
-                var data = tableAdd(freaks);
-                db.off();
-                res.json({ data: data, error: 'Name belongs to the other account' });
-
-            });
-
-        } else
-            Freak.updateOne({ _id: req.body.check }, { username: req.body.username, quickpoint: parseInt(req.body.quickpoint, 10), normalpoint: parseInt(req.body.normalpoint, 10), password: req.body.password, age: parseInt(req.body.age, 10) }, () => {
-                Freak.find(function(err, freaks) {
-                    if (err) return handleError(err);
-                    var data = tableAdd(freaks);
-                    db.off();
-                    res.json({ data: data, erorr: '' });
-
-                });
-
-            });
-
-    });
-
-}
-exports.delete = function(req, res) {
-    db.on();
-    Freak.deleteOne({ _id: req.body.check }, () => {
-        Freak.find(function(err, freaks) {
-            if (err) return handleError(err);
-            db.off();
-            var data = tableAdd(freaks);
-            res.json({ data: data });
-
+exports.edit = function (req, res) {
+    pool.on;
+    pool.connect((err, client, done) => {
+        if (err) return handleError(err);
+        const query = `
+            UPDATE players SET password=$1, age=$2 WHERE players.username = $3;
+        `;
+        client.query(query, [req.body.password, parseInt(req.body.age, 10), req.body.username], (e) => {
+            if (e) return handleError(e);
         });
 
-    });
+        const query1 = `
+            UPDATE ranking SET quickpoint=$1, normalpoint=$2 FROM players WHERE ranking.id = players.id AND players.username = $3;
+        `;
+        client.query(query1, [parseInt(req.body.quickpoint, 10), parseInt(req.body.normalpoint, 10), req.body.username], (e) => {
+            if (e) return handleError(e);
+        });
 
+        const query2 = `
+            SELECT username, password, quickpoint, normalpoint, age FROM players, ranking WHERE players.id = ranking.id;
+        `;
+        client.query(query2, [], (e, result) => {
+            done();
+            if (e) return handleError(e);
+            var data = tableAdd(result.rows);
+            res.json({ data: data, erorr: '' });
+        });
+    });
 }
-exports.index = function(req, res) {
-    db.on();
-    Freak.find(function(err, freaks) {
+exports.delete = function (req, res) {
+    pool.on;
+    pool.connect((err, client, done) => {
+        const query = `
+        DELETE FROM ranking WHERE ranking.id = (SELECT id FROM players WHERE players.username = $1);
+        `;
+        client.query(query, [req.body.username], (e) => {
+            if (e) return handleError(e);
+        });
+
+        const query1 = `
+            DELETE FROM players WHERE players.username = $1;
+        `;
+        client.query(query1, [req.body.username], (e) => {
+            if (e) return handleError(e);
+        });
+
+        const query2 = `
+        SELECT username, password, quickpoint, normalpoint, age FROM players, ranking WHERE players.id = ranking.id AND players.username <> $1;
+        `;
         if (err) return handleError(err);
-        var data = tableAdd(freaks);
-        db.off();
-        res.render('table', { data: data });
-
+        client.query(query2, [req.body.username], (e, result) => {
+            done()
+            var data = tableAdd(result.rows);
+            res.json({ data: data });
+        });
     });
 }
-exports.search = function (req,res) {
-    db.on();
+exports.index = function (req, res) {
+    pool.on;
+    pool.connect((err, client, done) => {
+        const query = `
+        SELECT username, password, quickpoint, normalpoint, age FROM players, ranking where players.id = ranking.id;
+        `;
+        if (err) return handleError(err);
+        client.query(query, [], (e, result) => {
+            done()
+            console.log(result.rows)
+            var data = tableAdd(result.rows)
+            res.render('table', { data: data })
+        });
+    });
+}
+exports.search = function (req, res) {
+    pool.on;
     console.log(req.body.name);
-    Freak.find({username:{$regex :req.body.name,$options: 'i'}},function(err, freaks) {
+    pool.connect((err, client, done) => {
         if (err) return handleError(err);
-        var data = tableAdd(freaks);
-        db.off();
-        res.json({ data: data });
-
+        const query = `
+        SELECT username, password, quickpoint, normalpoint, age FROM players, ranking WHERE players.id = ranking.id AND players.username LIKE $1;
+        `;
+        client.query(query, [req.body.name + '%'], (e, result) => {
+            done();
+            console.log(result.rows)
+            var data = tableAdd(result.rows);
+            res.json({ data: data });
+        });
     });
 }

@@ -1,5 +1,4 @@
-const Freak = require('./freaking.js');
-const db = require('./db.js');
+const pool = require('./database.js');
 const array = [
     { username: "admin", password: "admin", quickpoint: 0, normalpoint: 0 },
     { username: "Phu", password: "123456", quickpoint: 0, normalpoint: 0 },
@@ -12,11 +11,21 @@ const array = [
 ];
 
 function insert() {
-    db.on();
-    Freak.create(array, function(e) {
-        // body...
-        console.log(e);
-        db.off();
+    pool.connect((err, client, done) => {
+        const query2 = `
+        INSERT INTO ranking(id, quickpoint, normalpoint) VALUES((SELECT id from players WHERE username=$1),$2,$3);
+        `;
+        const query1 = `
+        INSERT INTO players(username, password, age) VALUES($1,$2,$3);
+        `;
+        if (err) throw err;
+        array.forEach((player) =>{
+            client.query(query1, [player.username, player.password, player.age], (e) => {
+            });
+            client.query(query2, [player.username, player.quickpoint, player.normalpoint], (e) => {
+            });
+        })
+        done();
     });
 }
 insert();
