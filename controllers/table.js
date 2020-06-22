@@ -28,7 +28,7 @@ function tableAdd(freaks) {
 
 }
 exports.add = function (req, res) {
-    pool.on;
+    // pool.on;
     pool.connect((err, client, done) => {
         if (err) throw err;
         const query = `
@@ -81,7 +81,7 @@ exports.add = function (req, res) {
 }
 //edit update
 exports.edit = function (req, res) {
-    pool.on;
+    // pool.on;
     pool.connect((err, client, done) => {
         if (err) return handleError(err);
         const query = `
@@ -110,7 +110,7 @@ exports.edit = function (req, res) {
     });
 }
 exports.delete = function (req, res) {
-    pool.on;
+    // pool.on;
     pool.connect((err, client, done) => {
         const query = `
         DELETE FROM ranking WHERE ranking.id = (SELECT id FROM players WHERE players.username = $1);
@@ -138,7 +138,7 @@ exports.delete = function (req, res) {
     });
 }
 exports.index = function (req, res) {
-    pool.on;
+    // pool.on;
     pool.connect((err, client, done) => {
         const query = `
         SELECT username, password, quickpoint, normalpoint, age FROM players, ranking where players.id = ranking.id;
@@ -153,7 +153,7 @@ exports.index = function (req, res) {
     });
 }
 exports.search = function (req, res) {
-    pool.on;
+    // pool.on;
     console.log(req.body.name);
     pool.connect((err, client, done) => {
         if (err) return handleError(err);

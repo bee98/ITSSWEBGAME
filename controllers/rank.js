@@ -2,7 +2,7 @@ var pool = require('../models/database.js');
 var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
 exports.rank = function (req, res, next) {
-    pool.on;
+    // pool.on;
     let table = '<table id="myTable">' + '<tr>' +
         '<th>' + 'Quick ' + '</th>' +
         '<th>' + '		' + '</th>' +
@@ -25,6 +25,7 @@ exports.rank = function (req, res, next) {
                 quick = quick_result.rows 
                 normal = normal_result.rows
                 for (let i = 0; i < 10; i++) {
+                    if (typeof quick[i] !== 'undefined' && typeof normal[i] !== 'undefined')
                     table = table + '<tr>' +
                         '<td>' + quick[i].username + '</td>' +
                         '<td>' + quick[i].quickpoint + '</td>' +

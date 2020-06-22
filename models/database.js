@@ -14,6 +14,7 @@ exports.on = function()
   pool.on('error', (err, client) => {
     console.error('Error:', err);
   });
+  console.log("Hellfdsf");
 };
 
 exports.off = function()
