@@ -1,32 +1,43 @@
-var Freak = require('../models/freaking.js');
-var db = require('../models/db.js');
+var pool = require('../models/database.js');
 var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
 
-exports.update = function(req, res, next) {
-    console.log(req.body);
-    db.on();
-    Freak.findOne({ username: req.body.username }, function(e, freak) {
-    	if(e) res.json({});
-    	else if(null === freak){
-    		db.off();
-    		res.json({});
-    	}   		 
-        else if (freak.quickpoint < req.body.quickpoint && freak.normalpoint < req.body.normalpoint) Freak.updateOne({ username: req.body.username }, { quickpoint: req.body.quickpoint, normalpoint: req.body.normalpoint }, function(e) {
-            db.off();
+exports.update = function (req, res, next) {
+    console.log(req.body)
+    pool.connect((err, client, done) => {
+        const query = `
+        SELECT username, password, players.id, normalpoint, quickpoint FROM players, ranking where username=$1 AND players.id = ranking.id;
+        `;
+        if (err) throw err;
+        client.query(query, [req.body.username], (error, result) => {
+            data = result.rows[0];
+            if (error) {
+                console.error(error);
+            }
+            else if (data.quickpoint < req.body.quickpoint && data.normalpoint < req.body.normalpoint) {
+                const query = `
+                UPDATE ranking SET quickpoint=$1,normalpoint = $2 WHERE id=(SELECT id from players WHERE username=$3);
+                `;
+                if (err) throw err;
+                client.query(query, [req.body.quickpoint, req.body.normalpoint, req.body.username], (err, result) => {
+                    done();
+                });
+            } else if (data.quickpoint < req.body.quickpoint) {
+                const query = `
+                UPDATE ranking SET quickpoint=$1 WHERE id=(SELECT id from players WHERE username=$2);
+                `;
+                client.query(query, [req.body.quickpoint, req.body.username], (err, result) => {
+                    done();
+                });
+            } else if (data.normalpoint < req.body.normalpoint) {
+                const query = `
+                UPDATE ranking SET normalpoint=$1 WHERE id=(SELECT id from players WHERE username=$2);
+                `;
+                client.query(query, [req.body.normalpoint, req.body.username], (err, result) => {
+                    done();
+                });
+            }
             res.json({});
         });
-        else if (freak.quickpoint < req.body.quickpoint) Freak.updateOne({ username: req.body.username }, { quickpoint: req.body.quickpoint }, function(e) {
-            db.off();
-            res.json({});
-        });
-        else if (freak.normalpoint < req.body.normalpoint) Freak.updateOne({ username: req.body.username }, { normalpoint: req.body.normalpoint }, function(e) {
-            db.off();
-            res.json({});
-        });
-        else {
-            db.off();
-            res.json({});
-        }
     });
 }

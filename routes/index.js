@@ -18,7 +18,7 @@ router.get('/logout', function(req, res) {
     res.redirect(301, '/');
 });
 router.get('/usermanager', function(req, res, next) {
-    table.index(req, res);
+    table.index(req, res, next);
 });
 router.post('/add', (req, res, next) => { table.add(req, res) });
 router.post('/edit', (req, res, next) => { table.edit(req, res) });
