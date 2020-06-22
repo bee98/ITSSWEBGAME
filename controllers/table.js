@@ -3,6 +3,7 @@ var Freak = require('../models/freaking.js');
 var db = require('../models/db.js');
 var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
+
 function tableAdd(freaks) {
     var data = '<table id="myTable">' + '<tr>' +
         '<th>' + 'Name' + '</th>' +
@@ -38,7 +39,7 @@ exports.add = function(req, res) {
                         if (err) return handleError(err);
                         var data = tableAdd(freaks);
                         db.off();
-                        res.json({ data: data,error:""});
+                        res.json({ data: data, error: "" });
 
                     });
 
@@ -121,14 +122,19 @@ exports.index = function(req, res) {
 
     });
 }
-exports.search = function (req,res) {
+exports.search = function(req, res) {
     db.on();
     console.log(req.body.name);
-    Freak.find({username:{$regex :req.body.name,$options: 'i'}},function(err, freaks) {
-        if (err) return handleError(err);
-        var data = tableAdd(freaks);
-        db.off();
-        res.json({ data: data });
+    Freak.find({ username: { $regex: req.body.name, $options: 'i' } }, function(err, freaks) {
+        if (err) {
+            db.off();
+            res.json({ error: 'Not exist' });
+        } else {
+            var data = tableAdd(freaks);
+            db.off();
+            res.json({ data: data });
+        }
+
 
     });
 }

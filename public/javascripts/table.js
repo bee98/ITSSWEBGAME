@@ -76,10 +76,8 @@ function getInfo() {
 }
 
 function searchName(event) {
-    const code = event.keyCode;
-    const name = document.getElementById("search").value;
-    if (13 === code) {
-          axios.post('/search',{name:name})
+
+          axios.post('/search',{name:event.target.value})
             .then(function(response) {
                 console.log(response);
                 document.getElementById("usertable").innerHTML = response.data.data;
@@ -87,7 +85,7 @@ function searchName(event) {
             .catch(function(error) {
                 console.log(error);
             });
-    }
+    
 }
 
 function resetForm() {

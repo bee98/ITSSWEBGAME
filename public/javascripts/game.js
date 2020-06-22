@@ -5,9 +5,13 @@ $(document).ready(function() {
     const nameInfor = $('#username').text();
     let username = nameInfor.toString().trim();
     //random phép toán
-    function changeNumber() {
-        num1 = Math.floor(Math.random() * 20);
-        num2 = Math.floor(Math.random() * 20);
+    function changeNumber(count) {
+    	var num = 0;
+    	if(count < 10) num = 0;
+    	else if( count >= 10 &&  count < 20) num = 5;
+    	else if( count > 20) num = 10;
+        num1 = Math.floor(Math.random() * 10) + num;
+        num2 = Math.floor(Math.random() * 10) + num;
         var sumtest = [num1 + num2 + 2, num1 + num2 - 2, num1 + num2]
         sum = sumtest[Math.floor(Math.random() * sumtest.length)];
         $('.num-1').text(num1);
@@ -157,7 +161,7 @@ $(document).ready(function() {
         $('.afterPlaying1').css("display", "none");
         $('.Playing1').css("display", "block");
         $('.Playing2').css("display", "none");
-        changeNumber();
+        changeNumber(count1);
         changeBgColor();
         count1 = 0;
         $('.point').text(count1);
@@ -174,7 +178,7 @@ $(document).ready(function() {
         $('.afterPlaying2').css("display", "none");
         $('.Playing1').css("display", "none");
         $('.Playing2').css("display", "block");
-        changeNumber();
+        changeNumber(count2);
         changeBgColor();
         count2 = 0;
         $('.point').text(count2);
@@ -186,7 +190,7 @@ $(document).ready(function() {
         $('.time').css("display", "block");
         $('.Playing1').css("display", "block");
         changeBgColor();
-        changeNumber();
+        changeNumber(count1);
         count1 = 0;
         $('.point').text(count1);
         resetTime1();
@@ -202,7 +206,7 @@ $(document).ready(function() {
             endGame1();
         }, 2000);
         if (num1 + num2 == sum) {
-            changeNumber();
+            changeNumber(count1);
             count1++;
             $('.point').text(count1);
         } else {
@@ -217,7 +221,7 @@ $(document).ready(function() {
             endGame1();
         }, 2000);
         if (num1 + num2 != sum) {
-            changeNumber();
+            changeNumber(count1);
             count1++;
             $('.point').text(count1);
         } else {
@@ -227,7 +231,9 @@ $(document).ready(function() {
 
     //quay về menu
     $('.menu').click(function() {
-        clearTimeout(time)
+        clearTimeout(time);
+        count1 = 0;
+        count2 = 0;
         $('.time').css("display", "none");
         $('.beforePlaying').css("display", "block");
         $('.afterPlaying1').css("display", "none");
@@ -240,7 +246,7 @@ $(document).ready(function() {
         $('.time').css("display", "block");
         $('.Playing2').css("display", "block");
         changeBgColor();
-        changeNumber();
+        changeNumber(count2);
         count2 = 0;
         $('.point').text(count2);
         resetTime2();
@@ -251,7 +257,7 @@ $(document).ready(function() {
 
     $('.true2').click(function() {
         if (num1 + num2 == sum) {
-            changeNumber();
+            changeNumber(count2);
             count2++;
             $('.point').text(count2);
         } else
@@ -261,7 +267,7 @@ $(document).ready(function() {
     $('.false2').click(function() {
         if (num1 + num2 != sum) {
             count2++;
-            changeNumber();
+            changeNumber(count2);
             $('.point').text(count2);
         } else
             changeNumber();
