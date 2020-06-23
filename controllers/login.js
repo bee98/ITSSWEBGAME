@@ -13,6 +13,7 @@ exports.signin = function(req, res) {
             res.render('game', { username: data.username,quick:data.quickpoint,normal:data.normalpoint});
     });
 }
+
 exports.signup = function(req, res) {
     db.on();
     console.log(req.body);

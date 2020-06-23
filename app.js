@@ -3,6 +3,8 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const bodyParser = require('body-parser')
+const db = require('./queries')
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -26,6 +28,21 @@ app.use('/users', usersRouter);
 app.use(function(req, res, next) {
   next(createError(404));
 });
+
+
+app.use(express.json());
+app.use(bodyParser.json())
+app.use(
+    bodyParser.urlencoded({
+        extended: true,
+    })
+)
+//api
+app.get('/', (req, res) => res.json({ message: 'Hello World' }))
+app.get('/players', db.getPlayers)
+app.get('/players/:id', db.getPlayersById)
+app.post('/login', db.login)
+
 
 // error handler
 app.use(function(err, req, res, next) {
